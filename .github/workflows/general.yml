@@ -11,12 +11,7 @@ on:
       - master
       - feature/*
       - bugfix/*
-  pull_request:
-    types: [ opened, synchronize, reopened ]
-    branches:
-      - master
-      - feature/*
-      - bugfix/*
+
 
 env:
   CARGO_TERM_COLOR: always
