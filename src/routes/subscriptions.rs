@@ -20,7 +20,6 @@ pub struct FormData {
     )
 )]
 pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> impl Responder {
-
     let query_span = tracing::info_span!("Saving new subscriber details in database");
     match sqlx::query!(
         r#"
@@ -36,16 +35,12 @@ pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> im
     .instrument(query_span)
     .await
     {
-        Ok(_) => {;
+        Ok(_) => {
             HttpResponse::Ok()
         }
         Err(e) => {
-            tracing::error!(
-                "Failed to execute query: {:?}",
-                e
-            );
+            tracing::error!("Failed to execute query: {:?}", e);
             HttpResponse::InternalServerError()
         }
     }
 }
-
